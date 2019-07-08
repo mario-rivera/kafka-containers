@@ -5,6 +5,10 @@ $ docker-compose up -d \
 zookeeper kafka
 ```
 
+***
+Connect your containers to the same network to interact with the kafka instance.
+***
+
 ## Display Topic List
 
 ```bash
@@ -21,5 +25,15 @@ run --rm --no-deps \
 -e TOPIC_NAME=test topic
 ```
 
-***
-Connect your containers to the same network to interact with the kafka instance.
+## Listen for Kafka Topic
+
+```bash
+docker-compose exec \
+-e TOPIC_NAME=test kafka bash
+```
+
+Inside the container run
+
+```bash
+/usr/bin/kafka-console-consumer --bootstrap-server localhost:9092 --topic ${TOPIC_NAME}
+```

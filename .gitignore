@@ -1,0 +1,8 @@
+###> ide ###
+/.vscode
+/.idea
+###< ide ###
+
+###> application ###
+.env
+###< application ###

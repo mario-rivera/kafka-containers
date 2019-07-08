@@ -1,0 +1,42 @@
+version: '3.7'
+
+services:
+  zookeeper:
+    image: confluentinc/cp-zookeeper:5.2.2
+    container_name: ${ZOOKEEPER_CONTAINER}
+    environment:
+      - ZOOKEEPER_CLIENT_PORT
+    networks: 
+      - default
+
+  kafka:
+    image: confluentinc/cp-kafka:5.2.2
+    container_name: ${KAFKA_CONTAINER}
+    environment:
+      - KAFKA_ZOOKEEPER_CONNECT=${ZOOKEEPER_CONTAINER}:${ZOOKEEPER_CLIENT_PORT}
+      - KAFKA_ADVERTISED_LISTENERS=PLAINTEXT://${KAFKA_CONTAINER}:${KAFKA_PORT}
+      - KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR=1
+    ports:
+      - "${KAFKA_PORT}:${KAFKA_PORT}"
+    networks: 
+      - default
+
+  topiclist:
+    image: confluentinc/cp-kafka:5.2.2
+    networks: 
+      - default
+    command: kafka-topics --zookeeper ${ZOOKEEPER_CONTAINER}:${ZOOKEEPER_CLIENT_PORT} --list
+
+  topic:
+    image: confluentinc/cp-kafka:5.2.2
+    volumes: 
+      - .:/app
+    environment:
+      - KAFKA_ZOOKEEPER_CONNECT=${ZOOKEEPER_CONTAINER}:${ZOOKEEPER_CLIENT_PORT}
+    networks: 
+      - default
+    command: bash /app/shell/topic.sh
+
+networks:
+  default:
+    name: ${KAFKA_NETWORK}

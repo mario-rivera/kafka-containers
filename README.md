@@ -22,7 +22,7 @@ topiclist
 ```bash
 $ docker-compose \
 run --rm --no-deps \
--e TOPIC_NAME=test topic
+-e TOPIC_NAME=test -e PARTITIONS=2 topic
 ```
 
 ## Listen for Kafka Topic
@@ -36,4 +36,12 @@ Inside the container run
 
 ```bash
 /usr/bin/kafka-console-consumer --bootstrap-server localhost:9092 --topic ${TOPIC_NAME}
+```
+
+## Describe a Topic
+
+```bash
+$ docker-compose \
+run --rm --no-deps \
+-e TOPIC_NAME=test describe
 ```

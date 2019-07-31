@@ -25,6 +25,14 @@ run --rm --no-deps \
 -e TOPIC_NAME=test -e PARTITIONS=2 topic
 ```
 
+## Delete a Topic
+
+```bash
+$ docker-compose \
+run --rm --no-deps \
+-e TOPIC_NAME=test delete
+```
+
 ## Listen for Kafka Topic
 
 ```bash

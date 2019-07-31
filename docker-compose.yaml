@@ -47,6 +47,16 @@ services:
       - default
     command: bash /app/shell/describe.sh
 
+  delete:
+    image: confluentinc/cp-kafka:5.2.2
+    volumes: 
+      - .:/app
+    environment:
+      - KAFKA_ZOOKEEPER_CONNECT=${ZOOKEEPER_CONTAINER}:${ZOOKEEPER_CLIENT_PORT}
+    networks: 
+      - default
+    command: bash /app/shell/deletetopic.sh
+
 networks:
   default:
     name: ${KAFKA_NETWORK}
